@@ -19,3 +19,44 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* globals.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f7fafc;
+  color: #333;
+}
+
+.font-sans {
+  font-family: 'Arial', sans-serif;
+}
+
+@keyframes moveRightToLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-move-right-to-left {
+  display: flex;
+  flex-direction: column;
+  animation: moveRightToLeft 20s linear infinite;
+}
+
+.testimonial:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Space between each testimonial */
+.space-y-12 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 3rem;
+}
