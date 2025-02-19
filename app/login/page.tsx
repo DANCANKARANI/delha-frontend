@@ -26,7 +26,7 @@ const LoginPage = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Invalid credentials");
+        throw new Error(errorData.message || "Invalid credentials. check user name or password");
       }
       login();
       // Redirect to admin dashboard
