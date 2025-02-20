@@ -22,16 +22,6 @@ const AdminDashboard = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
-  }, [isAuthenticated, router]);
-
-  if (!isAuthenticated) {
-    return null;
-  }
-
   const [lands, setLands] = useState<Land[]>([]);
   const [editingLand, setEditingLand] = useState<Land | null>(null);
   const [newImage, setNewImage] = useState<File | null>(null);
@@ -47,19 +37,27 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-    const fetchLands = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/listings`);
-        const data = await response.json();
-        setLands(data);
-      } catch (error) {
-        console.error("Error fetching land listings:", error);
-      }
-    };
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, router]);
 
-    fetchLands();
-  }, []);
+  useEffect(() => {
+    if (isAuthenticated) {
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const fetchLands = async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/listings`);
+          const data = await response.json();
+          setLands(data);
+        } catch (error) {
+          console.error("Error fetching land listings:", error);
+        }
+      };
+
+      fetchLands();
+    }
+  }, [isAuthenticated]);
 
   const handleDelete = async (id: string) => {
     try {
@@ -170,6 +168,10 @@ const AdminDashboard = () => {
       setErrorMessage("Error updating listing. Please try again.");
     }
   };
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="h-screen flex flex-col">
