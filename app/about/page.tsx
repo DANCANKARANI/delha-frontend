@@ -31,7 +31,7 @@ const AboutUsPage = () => {
               Founded in 2023, Delha Destiny Solutions emerged from the vision of experienced real estate professionals who are passionate about creating long-lasting value for land buyers and sellers. We saw an opportunity to simplify land transactions while ensuring customers make informed decisions.
             </p>
             <p className="mb-4">
-              Since our inception, we have expanded our offerings and focused on creating a seamless buying experience, using technology to connect buyers with the right properties. We're dedicated to offering a wide range of land options at competitive prices.
+              Since our inception, we have expanded our offerings and focused on creating a seamless buying experience, using technology to connect buyers with the right properties. We are dedicated to offering a wide range of land options at competitive prices.
             </p>
           </section>
 
@@ -56,47 +56,44 @@ const AboutUsPage = () => {
               <div className="bg-gray-100 p-6 rounded-lg text-center max-w-xs w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
                 <Image
                   src="/sec-general.jpg"
-                  alt="Team Member 2"
+                  alt="Secretary General"
                   width={128}
                   height={128}
                   className="mx-auto mb-4 rounded-full object-cover"
                 />
                 <h3 className="text-xl font-semibold mb-2">Jmereck Ngare</h3>
-                <p className="text-gray-600">Sec General</p>
+                <p className="text-gray-600">Secretary General</p>
                 <p className="mt-2">
-                 Jamereck oversees the day-to-day operations, ensuring that the land selling process remains smooth and efficient for both buyers and sellers.
+                  Jmereck oversees the day-to-day operations, ensuring that the land-selling process remains smooth and efficient for both buyers and sellers.
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Moving Reviews Section */}
+          {/* Reviews Section */}
           <section className="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 className="text-3xl font-semibold mb-4 text-red-600 text-center">Reviews</h2>
-            <div className="overflow-hidden">
-              <div className="animate-move-right-to-left space-y-12">
-                <div className="testimonial p-4 bg-gray-100 rounded-lg shadow-md hover:scale-105 transition-all duration-300">
-                  <p className="italic text-lg">
-                    "Delha Destiny Solutions provided us with top-notch real estate services. Our experience has been exceptional!"
-                  </p>
-                  <p className="font-bold text-blue-600">- John Mbaru, CEO of XYZ Corp</p>
-                </div>
-                <div className="testimonial p-4 bg-gray-100 rounded-lg shadow-md hover:scale-105 transition-all duration-300">
-                  <p className="italic text-lg">
-                    "We highly recommend Delha Destiny. Their attention to detail and commitment to service excellence is unparalleled."
-                  </p>
-                  <p className="font-bold text-blue-600">- Jane Smith, Founder of ABC Enterprises</p>
-                </div>
-                <div className="testimonial p-4 bg-gray-100 rounded-lg shadow-md hover:scale-105 transition-all duration-300">
-                  <p className="italic text-lg">
-                    "The team at Delha Destiny is professional, knowledgeable, and always ready to go the extra mile. We are extremely satisfied."
-                  </p>
-                  <p className="font-bold text-blue-600">- Mike Johnson, Partner at RealEstateCo</p>
-                </div>
+            <div className="space-y-6">
+              <div className="testimonial p-4 bg-gray-100 rounded-lg shadow-md hover:scale-105 transition-all duration-300">
+                <p className="italic text-lg">
+                  &quot;Delha Destiny Solutions provided us with top-notch real estate services. Our experience has been exceptional!&quot;
+                </p>
+                <p className="font-bold text-blue-600">- John Mbaru, CEO of XYZ Corp</p>
+              </div>
+              <div className="testimonial p-4 bg-gray-100 rounded-lg shadow-md hover:scale-105 transition-all duration-300">
+                <p className="italic text-lg">
+                  &quot;We highly recommend Delha Destiny. Their attention to detail and commitment to service excellence is unparalleled.&quot;
+                </p>
+                <p className="font-bold text-blue-600">- Jane Smith, Founder of ABC Enterprises</p>
+              </div>
+              <div className="testimonial p-4 bg-gray-100 rounded-lg shadow-md hover:scale-105 transition-all duration-300">
+                <p className="italic text-lg">
+                  &quot;The team at Delha Destiny is professional, knowledgeable, and always ready to go the extra mile. We are extremely satisfied.&quot;
+                </p>
+                <p className="font-bold text-blue-600">- Mike Johnson, Partner at RealEstateCo</p>
               </div>
             </div>
           </section>
-
         </div>
       </main>
       <Footer />

@@ -14,7 +14,7 @@ const PageNotFound = () => {
           <h1 className="text-5xl font-bold text-red-600 mb-4">404</h1>
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Page Not Found</h2>
           <p className="text-gray-600 mb-6">
-            Sorry, the page you're looking for does not exist or has been moved.
+            Sorry, the page you&rsquo;re looking for does not exist or has been moved.
           </p>
           <Link href="/" passHref>
             <button className="px-6 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition-colors duration-300">

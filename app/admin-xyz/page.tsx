@@ -6,6 +6,7 @@ import Footer from "../component/footer";
 import Navbar from "../component/navbar";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../context/authContext";
+import Image from "next/image";
 
 interface Land {
   id: string;
@@ -206,7 +207,7 @@ const AdminDashboard = () => {
               <input type="text" name="price" value={newListing.price} onChange={handleInputChange} placeholder="Price" className="border p-2 w-full mb-2" />
               <input type="text" name="location" value={newListing.location} onChange={handleInputChange} placeholder="Location" className="border p-2 w-full mb-2" />
               <input type="file" onChange={handleImageChange} className="border p-2 w-full mb-2" />
-              {imagePreview && <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover mb-2" />}
+              {imagePreview && <Image src={imagePreview} alt="Preview" className="w-32 h-32 object-cover mb-2" />}
               <div className="flex space-x-2">
                 <button onClick={handleAddListing} className="bg-green-500 text-white px-4 py-2 rounded">Save</button>
                 <button onClick={() => setShowAddForm(false)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
@@ -224,7 +225,7 @@ const AdminDashboard = () => {
               <input type="text" name="price" value={editingLand.price} onChange={handleInputChange} placeholder="Price" className="border p-2 w-full mb-2" />
               <input type="text" name="location" value={editingLand.location} onChange={handleInputChange} placeholder="Location" className="border p-2 w-full mb-2" />
               <input type="file" onChange={handleImageChange} className="border p-2 w-full mb-2" />
-              {imagePreview && <img src={imagePreview} alt="Preview" className="w-32 h-32 object-cover mb-2" />}
+              {imagePreview && <Image src={imagePreview} alt="Preview" className="w-32 h-32 object-cover mb-2" />}
               <div className="flex space-x-2">
                 <button onClick={handleUpdateListing} className="bg-green-500 text-white px-4 py-2 rounded">Update</button>
                 <button onClick={() => setEditingLand(null)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
@@ -252,7 +253,7 @@ const AdminDashboard = () => {
                   <td className="p-3">{land.size}</td>
                   <td className="p-3">{land.price}</td>
                   <td className="p-3">
-                    <img src={land.image_url} alt={land.title} className="w-16 h-16 object-cover" />
+                    <Image src={land.image_url} alt={land.title} className="w-16 h-16 object-cover" />
                   </td>
                   <td className="p-3 space-x-2">
                     <button onClick={() => handleEditClick(land)} className="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>

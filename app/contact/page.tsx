@@ -10,10 +10,10 @@ export default function Contact() {
     message: "",
   });
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     alert("Message sent! We'll get back to you soon.");
