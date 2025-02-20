@@ -128,7 +128,7 @@ const AdminDashboard = () => {
       setImagePreview(null);
       setNewListing({ title: "", description: "", size: "", price: "", location: "" });
     } catch (error) {
-      setErrorMessage("Error adding listing. Please try again.");
+      console.error("Error fetching land listings:", error);
     }
   };
 
@@ -164,8 +164,9 @@ const AdminDashboard = () => {
       setEditingLand(null);
       setNewImage(null);
       setImagePreview(null);
-    } catch (error) {
+    }catch (error) {
       setErrorMessage("Error updating listing. Please try again.");
+      console.error("Error updating listing:", error);
     }
   };
 
