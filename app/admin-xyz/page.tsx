@@ -21,7 +21,7 @@ interface Land {
 const AdminDashboard = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen] = useState(false);
   const [lands, setLands] = useState<Land[]>([]);
   const [editingLand, setEditingLand] = useState<Land | null>(null);
   const [newImage, setNewImage] = useState<File | null>(null);
