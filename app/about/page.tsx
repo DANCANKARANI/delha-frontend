@@ -40,7 +40,7 @@ const AboutUsPage = () => {
             <h2 className="text-3xl font-semibold mb-4 text-red-600 text-center">Message from Our CEO</h2>
             <div className="flex flex-col items-center">
               <Image
-                src="/ceo.jpg"
+                src="/sec-general.jpg"
                 alt="John Mbaru - CEO"
                 width={128}
                 height={128}
