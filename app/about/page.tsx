@@ -89,7 +89,7 @@ const AboutUsPage = () => {
                   height={128}
                   className="mx-auto mb-4 rounded-full object-cover"
                 />
-                <h3 className="text-xl font-semibold mb-2">Jamereck Ngare</h3>
+                <h3 className="text-xl font-semibold mb-2">Jamleck Ngare</h3>
                 <p className="text-gray-600">Secretary General</p>
                 <p className="mt-2">
                   Jamereck oversees the day-to-day operations, ensuring that the land-selling process remains smooth and efficient for both buyers and sellers.
