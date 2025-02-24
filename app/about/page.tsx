@@ -50,13 +50,13 @@ const AboutUsPage = () => {
               <p className="text-gray-600 mb-4">Co-Founder & CEO</p>
             </div>
             <p className="italic mb-4">
-              &quot;As the CEO of Delha Destiny Solutions, I am proud to share the inspiring origin of our company, a testament to collaboration and community spirit. Eight years ago, four dedicated groups—Danesco Self Help Group, Illinois Brothers, Delusa Self Help Group, and Haha Niho Muico—came together with a shared vision: to create a sustainable enterprise that would not only thrive in the real estate sector but also uplift our community."
+              &quot;As the CEO of Delha Destiny Solutions, I am proud to share the inspiring origin of our company, a testament to collaboration and community spirit. Eight years ago, four dedicated groups—Danesco Self Help Group, Illinois Brothers, Delusa Self Help Group, and Haha Niho Muico—came together with a shared vision: to create a sustainable enterprise that would not only thrive in the real estate sector but also uplift our community.
             </p>
             <p className="mb-4">
               From our humble beginnings, we have focused on buying and selling land, as well as building and managing properties. Our commitment to excellence has allowed us to transform many tenants into proud landlords, empowering individuals and families to achieve their dreams of homeownership. This journey has been about more than just business; it has been about fostering a sense of belonging and stability within our community.
             </p>
             <p className="mb-4">
-              At Delha Destiny Solutions, we believe in giving back. Our members actively engage in outreach programs, visiting children's homes and supporting small farmers and vulnerable individuals in society. We understand that true success is measured not just by financial growth, but by the positive impact we have on the lives of those around us.
+              At Delha Destiny Solutions, we believe in giving back. Our members actively engage in outreach programs, visiting children&apos;s homes and supporting small farmers and vulnerable individuals in society. We understand that true success is measured not just by financial growth, but by the positive impact we have on the lives of those around us.
             </p>
             <p className="mb-4">
               As we continue to grow and evolve, we remain dedicated to our mission of creating opportunities and nurturing community ties. Together, we are not just building properties; we are building a brighter future for all. Thank you for being part of our journey, and we look forward to what lies ahead.&quot;
