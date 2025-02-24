@@ -21,7 +21,7 @@ interface Land {
 const AdminDashboard = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [lands, setLands] = useState<Land[]>([]);
   const [editingLand, setEditingLand] = useState<Land | null>(null);
   const [newImage, setNewImage] = useState<File | null>(null);
@@ -36,27 +36,34 @@ const AdminDashboard = () => {
     location: "",
   });
 
+  // Redirect if not authenticated
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
-  }, [isAuthenticated, router]);
+    const checkAuth = async () => {
+      const token = localStorage.getItem("authToken"); // Replace with your token key
+      if (!token) {
+        router.push("/login");
+      }
+    };
 
+    checkAuth();
+  }, [router]);
+
+  // Fetch lands if authenticated
   useEffect(() => {
-    if (isAuthenticated) {
+    const fetchLands = async () => {
+      if (!isAuthenticated) return; // Exit if not authenticated
+
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const fetchLands = async () => {
-        try {
-          const response = await fetch(`${API_BASE_URL}/listings`);
-          const data = await response.json();
-          setLands(data);
-        } catch (error) {
-          console.error("Error fetching land listings:", error);
-        }
-      };
+      try {
+        const response = await fetch(`${API_BASE_URL}/listings`);
+        const data = await response.json();
+        setLands(data);
+      } catch (error) {
+        console.error("Error fetching land listings:", error);
+      }
+    };
 
-      fetchLands();
-    }
+    fetchLands();
   }, [isAuthenticated]);
 
   const handleDelete = async (id: string) => {
@@ -81,7 +88,9 @@ const AdminDashboard = () => {
     setImagePreview(land.image_url);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     if (editingLand) {
       setEditingLand({ ...editingLand, [e.target.name]: e.target.value });
     } else {
@@ -126,15 +135,21 @@ const AdminDashboard = () => {
       setShowAddForm(false);
       setNewImage(null);
       setImagePreview(null);
-      setNewListing({ title: "", description: "", size: "", price: "", location: "" });
+      setNewListing({
+        title: "",
+        description: "",
+        size: "",
+        price: "",
+        location: "",
+      });
     } catch (error) {
-      console.error("Error fetching land listings:", error);
+      console.error("Error adding listing:", error);
     }
   };
 
   const handleUpdateListing = async () => {
     if (!editingLand) return; // Ensure editingLand is not null
-  
+
     setErrorMessage("");
     try {
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -147,31 +162,31 @@ const AdminDashboard = () => {
       if (newImage) {
         formData.append("image", newImage);
       }
-  
+
       const response = await fetch(`${API_BASE_URL}/listings/${editingLand.id}`, {
         method: "PATCH",
         body: formData,
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         setErrorMessage(errorData.message || "Failed to update listing.");
         return;
       }
-  
+
       const updatedLand = await response.json();
-      setLands(lands.map(land => land.id === updatedLand.id ? updatedLand : land));
+      setLands(lands.map((land) => (land.id === updatedLand.id ? updatedLand : land)));
       setEditingLand(null);
       setNewImage(null);
       setImagePreview(null);
-    }catch (error) {
-  setErrorMessage("Error updating listing. Please try again.");
-  console.error("Error updating listing:", error);
-}
+    } catch (error) {
+      setErrorMessage("Error updating listing. Please try again.");
+      console.error("Error updating listing:", error);
+    }
   };
 
   if (!isAuthenticated) {
-    return null;
+    return null; // Prevents rendering if not authenticated
   }
 
   return (
@@ -181,15 +196,14 @@ const AdminDashboard = () => {
       </div>
 
       <div className="flex flex-1 pt-16">
-        <aside className="w-64 h-screen bg-gray-800 text-white p-4 fixed left-0 top-16">
-          <h2 className="text-xl font-bold">Admin Panel</h2>
-          <ul>
-            <li className="py-2"><a href="#">Dashboard</a></li>
-            <li className="py-2"><a href="#">Land Listings</a></li>
-          </ul>
-        </aside>
+        {/* Sidebar */}
 
-        <main className="flex-1 bg-gray-100 p-8 overflow-y-auto ml-64">
+        {/* Main Content */}
+        <main
+          className={`flex-1 bg-gray-100 p-8 overflow-y-auto transition-all duration-200 ${
+            isSidebarOpen ? "ml-64" : "ml-0"
+          }`}
+        >
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-semibold text-red-600">Admin Dashboard</h1>
             <button
@@ -200,47 +214,154 @@ const AdminDashboard = () => {
             </button>
           </div>
 
+          {/* Add Listing Form */}
           {showAddForm && (
             <div className="mb-6 p-6 bg-white rounded-lg shadow-lg">
               <h2 className="text-xl font-semibold mb-4">Add New Listing</h2>
               {errorMessage && <p className="text-red-600">{errorMessage}</p>}
-              <input type="text" name="title" value={newListing.title} onChange={handleInputChange} placeholder="Title" className="border p-2 w-full mb-2" />
-              <textarea name="description" value={newListing.description} onChange={handleInputChange} placeholder="Description" className="border p-2 w-full mb-2"></textarea>
-              <input type="text" name="size" value={newListing.size} onChange={handleInputChange} placeholder="Size" className="border p-2 w-full mb-2" />
-              <input type="text" name="price" value={newListing.price} onChange={handleInputChange} placeholder="Price" className="border p-2 w-full mb-2" />
-              <input type="text" name="location" value={newListing.location} onChange={handleInputChange} placeholder="Location" className="border p-2 w-full mb-2" />
-              <input type="file" onChange={handleImageChange} className="border p-2 w-full mb-2" />
+              <input
+                type="text"
+                name="title"
+                value={newListing.title}
+                onChange={handleInputChange}
+                placeholder="Title"
+                className="border p-2 w-full mb-2"
+              />
+              <textarea
+                name="description"
+                value={newListing.description}
+                onChange={handleInputChange}
+                placeholder="Description"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                name="size"
+                value={newListing.size}
+                onChange={handleInputChange}
+                placeholder="Size"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                name="price"
+                value={newListing.price}
+                onChange={handleInputChange}
+                placeholder="Price"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                name="location"
+                value={newListing.location}
+                onChange={handleInputChange}
+                placeholder="Location"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="file"
+                onChange={handleImageChange}
+                className="border p-2 w-full mb-2"
+              />
               {imagePreview && (
-                <Image 
-                  src={imagePreview} 
-                  alt="Preview" 
-                  width={128} 
-                  height={128} 
-                  className="w-32 h-32 object-cover mb-2" 
+                <Image
+                  src={imagePreview}
+                  alt="Preview"
+                  width={128}
+                  height={128}
+                  className="w-32 h-32 object-cover mb-2"
                 />
               )}
 
               <div className="flex space-x-2">
-                <button onClick={handleAddListing} className="bg-green-500 text-white px-4 py-2 rounded">Save</button>
-                <button onClick={() => setShowAddForm(false)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                <button
+                  onClick={handleAddListing}
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="bg-gray-500 text-white px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           )}
 
+          {/* Edit Listing Form */}
           {editingLand && (
             <div className="mb-6 p-6 bg-white rounded-lg shadow-lg">
               <h2 className="text-xl font-semibold mb-4">Edit Listing</h2>
               {errorMessage && <p className="text-red-600">{errorMessage}</p>}
-              <input type="text" name="title" value={editingLand.title} onChange={handleInputChange} placeholder="Title" className="border p-2 w-full mb-2" />
-              <textarea name="description" value={editingLand.description} onChange={handleInputChange} placeholder="Description" className="border p-2 w-full mb-2"></textarea>
-              <input type="text" name="size" value={editingLand.size} onChange={handleInputChange} placeholder="Size" className="border p-2 w-full mb-2" />
-              <input type="text" name="price" value={editingLand.price} onChange={handleInputChange} placeholder="Price" className="border p-2 w-full mb-2" />
-              <input type="text" name="location" value={editingLand.location} onChange={handleInputChange} placeholder="Location" className="border p-2 w-full mb-2" />
-              <input type="file" onChange={handleImageChange} className="border p-2 w-full mb-2" />
-              {imagePreview && <Image src={imagePreview} alt="Preview" className="w-32 h-32 object-cover mb-2" />}
+              <input
+                type="text"
+                name="title"
+                value={editingLand.title}
+                onChange={handleInputChange}
+                placeholder="Title"
+                className="border p-2 w-full mb-2"
+              />
+              <textarea
+                name="description"
+                value={editingLand.description}
+                onChange={handleInputChange}
+                placeholder="Description"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                name="size"
+                value={editingLand.size}
+                onChange={handleInputChange}
+                placeholder="Size"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                name="price"
+                value={editingLand.price}
+                onChange={handleInputChange}
+                placeholder="Price"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                name="location"
+                value={editingLand.location}
+                onChange={handleInputChange}
+                placeholder="Location"
+                className="border p-2 w-full mb-2"
+              />
+              <input
+                type="file"
+                onChange={handleImageChange}
+                className="border p-2 w-full mb-2"
+              />
+              {imagePreview && (
+                <Image
+                  src={imagePreview}
+                  alt="Preview"
+                  width={128}
+                  height={128}
+                  className="w-32 h-32 object-cover mb-2"
+                />
+              )}
+
               <div className="flex space-x-2">
-                <button onClick={handleUpdateListing} className="bg-green-500 text-white px-4 py-2 rounded">Update</button>
-                <button onClick={() => setEditingLand(null)} className="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+                <button
+                  onClick={handleUpdateListing}
+                  className="bg-green-500 text-white px-4 py-2 rounded"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => setEditingLand(null)}
+                  className="bg-gray-500 text-white px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           )}
@@ -265,17 +386,32 @@ const AdminDashboard = () => {
                   <td className="p-3">{land.size}</td>
                   <td className="p-3">{land.price}</td>
                   <td className="p-3">
-                    <Image src={land.image_url} alt={land.title}  width={128}  height={128}  className="w-16 h-16 object-cover" />
+                    <Image
+                      src={land.image_url}
+                      alt={land.title}
+                      width={128}
+                      height={128}
+                      className="w-16 h-16 object-cover"
+                    />
                   </td>
                   <td className="p-3 space-x-2">
-                    <button onClick={() => handleEditClick(land)} className="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
-                    <button onClick={() => handleDelete(land.id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                    <button
+                      onClick={() => handleEditClick(land)}
+                      className="bg-blue-500 text-white px-3 py-1 rounded"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(land.id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
         </main>
       </div>
 

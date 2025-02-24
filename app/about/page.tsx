@@ -35,13 +35,41 @@ const AboutUsPage = () => {
             </p>
           </section>
 
+          {/* Message from Our CEO */}
+          <section className="bg-white p-8 rounded-lg shadow-md mb-8">
+            <h2 className="text-3xl font-semibold mb-4 text-red-600 text-center">Message from Our CEO</h2>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/ceo.jpg"
+                alt="John Mbaru - CEO"
+                width={128}
+                height={128}
+                className="rounded-full mb-4"
+              />
+              <h3 className="text-2xl font-bold mb-2">John Mbaru</h3>
+              <p className="text-gray-600 mb-4">Co-Founder & CEO</p>
+            </div>
+            <p className="italic mb-4">
+              "As the CEO of Delha Destiny Solutions, I am proud to share the inspiring origin of our company, a testament to collaboration and community spirit. Eight years ago, four dedicated groups—Danesco Self Help Group, Illinois Brothers, Delusa Self Help Group, and Haha Niho Muico—came together with a shared vision: to create a sustainable enterprise that would not only thrive in the real estate sector but also uplift our community."
+            </p>
+            <p className="mb-4">
+              From our humble beginnings, we have focused on buying and selling land, as well as building and managing properties. Our commitment to excellence has allowed us to transform many tenants into proud landlords, empowering individuals and families to achieve their dreams of homeownership. This journey has been about more than just business; it has been about fostering a sense of belonging and stability within our community.
+            </p>
+            <p className="mb-4">
+              At Delha Destiny Solutions, we believe in giving back. Our members actively engage in outreach programs, visiting children's homes and supporting small farmers and vulnerable individuals in society. We understand that true success is measured not just by financial growth, but by the positive impact we have on the lives of those around us.
+            </p>
+            <p className="mb-4">
+              As we continue to grow and evolve, we remain dedicated to our mission of creating opportunities and nurturing community ties. Together, we are not just building properties; we are building a brighter future for all. Thank you for being part of our journey, and we look forward to what lies ahead."
+            </p>
+          </section>
+
           {/* Meet the Team */}
           <section className="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 className="text-3xl font-semibold mb-4 text-red-600 text-center">Meet the Team</h2>
             <div className="flex justify-center gap-6 flex-wrap">
               <div className="bg-gray-100 p-6 rounded-lg text-center max-w-xs w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
                 <Image
-                  src="/ceo.jpg"
+                  src="/sec-general.jpg"
                   alt="CEO"
                   width={128}
                   height={128}
@@ -55,16 +83,16 @@ const AboutUsPage = () => {
               </div>
               <div className="bg-gray-100 p-6 rounded-lg text-center max-w-xs w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
                 <Image
-                  src="/sec-general.jpg"
+                  src="/ceo.jpg"
                   alt="Secretary General"
                   width={128}
                   height={128}
                   className="mx-auto mb-4 rounded-full object-cover"
                 />
-                <h3 className="text-xl font-semibold mb-2">Jmereck Ngare</h3>
+                <h3 className="text-xl font-semibold mb-2">Jamereck Ngare</h3>
                 <p className="text-gray-600">Secretary General</p>
                 <p className="mt-2">
-                  Jmereck oversees the day-to-day operations, ensuring that the land-selling process remains smooth and efficient for both buyers and sellers.
+                  Jamereck oversees the day-to-day operations, ensuring that the land-selling process remains smooth and efficient for both buyers and sellers.
                 </p>
               </div>
             </div>

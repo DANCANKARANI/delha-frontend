@@ -8,36 +8,42 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Added loading state
   const router = useRouter();
 
-  const { login } = useAuth()
+  const { login } = useAuth(); // Ensure this updates auth state
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setLoading(true); // Set loading state
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/admin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }), // Changed from email to username
-        credentials: "include", // Ensures cookies (if used) are stored
+        body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Invalid credentials. check user name or password");
+        throw new Error(errorData.message || "Invalid credentials. Check username or password.");
       }
-      login();
-      // Redirect to admin dashboard
+
+      const data = await response.json();
+      login(data); // Call login from context (if applicable)
+
       router.push("/admin-xyz");
     } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unexpected error occurred.");
-        }
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred.");
       }
+    } finally {
+      setLoading(false); // Reset loading state
+    }
   };
 
   return (
@@ -49,7 +55,7 @@ const LoginPage = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <input
-            type="text" // Changed from email to text
+            type="text"
             placeholder="Username"
             className="w-full p-2 border border-gray-300 rounded"
             value={username}
@@ -66,9 +72,10 @@ const LoginPage = () => {
           />
           <button
             type="submit"
-            className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700 transition"
+            className={`w-full bg-red-600 text-white p-2 rounded transition ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"}`}
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>
